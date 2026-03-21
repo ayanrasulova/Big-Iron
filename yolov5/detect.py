@@ -1,4 +1,6 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+
+
 """
 Run YOLOv5 detection inference on images, videos, directories, globs, YouTube, webcam, streams, etc.
 
@@ -245,10 +247,10 @@ def run(
             imc = im0.copy() if save_crop else im0  # for save_crop
             annotator = Annotator(im0, line_width=line_thickness, example=str(names))
             if len(det):
-                # Rescale boxes from img_size to im0 size
+                # rescale boxes from img_size to im0 size
                 det[:, :4] = scale_boxes(im.shape[2:], det[:, :4], im0.shape).round()
 
-                # --- CENTER FILTER ---
+                # center filter
                 frame_h, frame_w = im0.shape[:2]
                 frame_cx = frame_w / 2
                 frame_cy = frame_h / 2
@@ -274,7 +276,7 @@ def run(
                     obj_cx = (x1 + x2) / 2
                     obj_cy = (y1 + y2) / 2
 
-                    CENTER_THRESHOLD = 0.22
+                    CENTER_THRESHOLD = 0.25
 
                     dx = abs(obj_cx - frame_cx) / frame_w
                     dy = abs(obj_cy - frame_cy) / frame_h
@@ -288,6 +290,8 @@ def run(
                 for c in det[:, 5].unique():
                     n = (det[:, 5] == c).sum()  # detections per class
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
+
+                detections = []
 
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
@@ -317,12 +321,26 @@ def run(
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / "crops" / names[c] / f"{p.stem}.jpg", BGR=True)
 
+                    x1, y1, x2, y2 = map(int, xyxy)
+                    label = names[int(cls)] 
+                    label = names[int(cls)] 
+
+                    area = (x2 - x1) * (y2 - y1 ) 
+                    # add detection info to get usable data, used in decision-layer.py
+                    detections.append({"label": label, "confidence": float(conf), "area": area, "bbox": [x1, y1, x2, y2]})
+
+                # action = decide_action(detections, im0.shape)
+                # if action: 
+                #     print(f"Action decided: {action}")
+
+                    
+
             # Stream results
             im0 = annotator.result()
 
-            # CENTER TARGET BOX
+            # visualize center filter
             h, w = im0.shape[:2]
-            box_size = 180
+            box_size = int(min(w, h) * 0.25)
 
             cx = w // 2
             cy = h // 2
