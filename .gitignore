@@ -1,5 +1,7 @@
 yolov5-env2/
 yolov5-env/
+venv/
+.env/
 .mypycache__/
 __pycache__/
 .ipynb_checkpoints/
@@ -16,5 +18,10 @@ build/
 .mypy_cache/3.14/
 yolov5/runs/
 .mypy_cache/3.14/importlib/
+runs/
+*.mp4
+*.avi
+*.mov
+*.pt
+.DS_Store
 yolov5/yolov5s.pt
-.gitignore
