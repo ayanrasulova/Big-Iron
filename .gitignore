@@ -24,3 +24,4 @@ runs/
 *.mov
 *.pt
 .DS_Store
+yolov5/yolov5s.pt
