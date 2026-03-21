@@ -1,6 +1,5 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
-from decision_layer import decide_action
 
 """
 Run YOLOv5 detection inference on images, videos, directories, globs, YouTube, webcam, streams, etc.
@@ -277,7 +276,7 @@ def run(
                     obj_cx = (x1 + x2) / 2
                     obj_cy = (y1 + y2) / 2
 
-                    CENTER_THRESHOLD = 0.22 # make sure to scale this w/ box_size
+                    CENTER_THRESHOLD = 0.25
 
                     dx = abs(obj_cx - frame_cx) / frame_w
                     dy = abs(obj_cy - frame_cy) / frame_h
@@ -330,9 +329,9 @@ def run(
                     # add detection info to get usable data, used in decision-layer.py
                     detections.append({"label": label, "confidence": float(conf), "area": area, "bbox": [x1, y1, x2, y2]})
 
-                action = decide_action(detections, im0.shape)
-                if action: 
-                    print(f"Action decided: {action}")
+                # action = decide_action(detections, im0.shape)
+                # if action: 
+                #     print(f"Action decided: {action}")
 
                     
 
@@ -341,7 +340,7 @@ def run(
 
             # visualize center filter
             h, w = im0.shape[:2]
-            box_size = 180
+            box_size = int(min(w, h) * 0.25)
 
             cx = w // 2
             cy = h // 2
