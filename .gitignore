@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environments
+venv/
+.env/
+
+# YOLOv5 outputs
+runs/
+
+# Media outputs
+*.mp4
+*.avi
+*.mov
+
+# Model weights
+*.pt
+
+# OS files
+.DS_Store
