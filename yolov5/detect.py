@@ -1,4 +1,7 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
+
+from decision_layer import decide_action
+
 """
 Run YOLOv5 detection inference on images, videos, directories, globs, YouTube, webcam, streams, etc.
 
@@ -250,6 +253,8 @@ def run(
                     n = (det[:, 5] == c).sum()  # detections per class
                     s += f"{n} {names[int(c)]}{'s' * (n > 1)}, "  # add to string
 
+                detections = []
+
                 # Write results
                 for *xyxy, conf, cls in reversed(det):
                     c = int(cls)  # integer class
@@ -277,6 +282,20 @@ def run(
                         annotator.box_label(xyxy, label, color=colors(c, True))
                     if save_crop:
                         save_one_box(xyxy, imc, file=save_dir / "crops" / names[c] / f"{p.stem}.jpg", BGR=True)
+
+                    x1, y1, x2, y2 = map(int, xyxy)
+                    label = names[int(cls)] 
+                    label = names[int(cls)] 
+
+                    area = (x2 - x1) * (y2 - y1 ) 
+                    # add detection info to get usable data, used in decision-layer.py
+                    detections.append({"label": label, "confidence": float(conf), "area": area, "bbox": [x1, y1, x2, y2]})
+
+                action = decide_action(detections, im0.shape)
+                if action: 
+                    print(f"Action decided: {action}")
+
+                    
 
             # Stream results
             im0 = annotator.result()
