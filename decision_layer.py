@@ -53,10 +53,11 @@ def decide_action(detections, im_shape):
         # else:
         #      return "grasp_can"
 
-    elif label == "pencil":
-        print ("detected pencil, pinching")
-        return "pinch"
-
+    elif label == "toothbrush": # change to pen/pencil later
+            print("detected pencil, opening hand")
+            # if detected, wrist = 1, thumb = 180, pointer = 1, mid = 180, ring = 180, pinky = 180
+            finger_output = build_output(1, 180, 1, 180, 180, 180)
+            print(finger_output)
     return None
     
 # motions 
