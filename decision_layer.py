@@ -39,13 +39,16 @@ def decide_action(detections, im_shape):
 
     label = obj["label"]
 
-    if label == "cup":
+    if label == "cup" or label == "bottle":
+        print("detected cup, opening hand")
+
         if obj["area"] < 10000:
-            return "approach"
+             return "approach"
         else:
-            return "grasp_can"
+             return "grasp_can"
 
     elif label == "pencil":
+        print ("detected pencil, pinching")
         return "pinch"
 
     return None
