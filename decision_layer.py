@@ -4,18 +4,19 @@ import cv2
 # get detections from detect.py and use them to decide what action to take
 # if detect "can", want to open all 5 fingers, then close them when closer to can 
 
-finger_positions = { # 
-    "open": [0, 0, 0, 0, 0],
-    "close": [1, 1, 1, 1, 1]
-}
+# start byte, wrist, thumb, pointer, mid, ring, pinky, checksum
 
-def open_hand():
-    global finger_positions
-    finger_positions = [0, 0, 0, 0, 0]
+#defaults
+data_bytes = [1, 1, 180, 1, 1, 1]
 
-def close_hand():
-    global finger_positions
-    finger_positions = [1, 1, 1, 1, 1]
+def build_output(wrist, thumb, pointer, mid, ring, pinky):
+    data_bytes = [wrist, thumb, pointer, mid, ring, pinky]
+
+    check = 0
+    for b in data_bytes:
+        check ^= b
+
+    return [190] + data_bytes + [check]
 
 # select largest object
 def select_primary(detections, min_area=5000):
@@ -41,11 +42,16 @@ def decide_action(detections, im_shape):
 
     if label == "cup" or label == "bottle":
         print("detected cup, opening hand")
+        # if detected, wrist = 1, thumb = 180, pointer = 1, mid = 180, ring = 180, pinky = 180
+        finger_output = build_output(1, 180, 1, 180, 180, 180)
+        print(finger_output)
 
-        if obj["area"] < 10000:
-             return "approach"
-        else:
-             return "grasp_can"
+
+        # ignore this for now 
+        # if obj["area"] < 10000:
+        #      return "approach"
+        # else:
+        #      return "grasp_can"
 
     elif label == "pencil":
         print ("detected pencil, pinching")
