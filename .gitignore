@@ -16,3 +16,5 @@ build/
 .mypy_cache/3.14/
 yolov5/runs/
 .mypy_cache/3.14/importlib/
+yolov5/yolov5s.pt
+.gitignore
