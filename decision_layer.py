@@ -1,6 +1,5 @@
 import cv2
-from torch import det
-from detect import detections
+
 
 # get detections from detect.py and use them to decide what action to take
 # if detect "can", want to open all 5 fingers, then close them when closer to can 
@@ -41,11 +40,15 @@ def decide_action(detections, im_shape):
     label = obj["label"]
 
     if label == "bottle":
-        return "grasp_can"
+        if obj["area"] < 10000:
+            return "approach"
+        else:
+            return "grasp_can"
+
     elif label == "pencil":
         return "pinch"
-    else:
-        return None
+
+    return None
     
 # motions 
 
@@ -57,7 +60,7 @@ def grasp_can():
     while True:
         detections = get_detections()  # function to get current detections
         obj = select_primary(detections)
-        if obj and obj["label"] == "bottle" and obj["area"] > 10000:  # example threshold
+        if obj and (obj["label"] == "bottle" or obj["label"] == "cup") and obj["area"] > 10000:  # example threshold
             break
     # close fingers
     close_hand()
