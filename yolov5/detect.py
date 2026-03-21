@@ -248,10 +248,10 @@ def run(
             imc = im0.copy() if save_crop else im0  # for save_crop
             annotator = Annotator(im0, line_width=line_thickness, example=str(names))
             if len(det):
-                # Rescale boxes from img_size to im0 size
+                # rescale boxes from img_size to im0 size
                 det[:, :4] = scale_boxes(im.shape[2:], det[:, :4], im0.shape).round()
 
-                # --- CENTER FILTER ---
+                # center filter
                 frame_h, frame_w = im0.shape[:2]
                 frame_cx = frame_w / 2
                 frame_cy = frame_h / 2
@@ -277,7 +277,7 @@ def run(
                     obj_cx = (x1 + x2) / 2
                     obj_cy = (y1 + y2) / 2
 
-                    CENTER_THRESHOLD = 0.22
+                    CENTER_THRESHOLD = 0.22 # make sure to scale this w/ box_size
 
                     dx = abs(obj_cx - frame_cx) / frame_w
                     dy = abs(obj_cy - frame_cy) / frame_h
@@ -339,7 +339,7 @@ def run(
             # Stream results
             im0 = annotator.result()
 
-            # CENTER TARGET BOX
+            # visualize center filter
             h, w = im0.shape[:2]
             box_size = 180
 
