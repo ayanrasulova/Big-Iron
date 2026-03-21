@@ -1,5 +1,9 @@
 import cv2
 
+import sys
+sys.path.append("..")  # or full path
+
+from voice_control import listen_for_command
 
 # get detections from detect.py and use them to decide what action to take
 # if detect "can", want to open all 5 fingers, then close them when closer to can 
@@ -32,7 +36,24 @@ def select_primary(detections, min_area=5000):
     # pick largest (closest)
     return max(detections, key=lambda d: d["area"])
 
-def decide_action(detections, im_shape):
+def reset_hand():
+    print("VOICE: resetting hand")
+
+    return build_output(
+        wrist=1,
+        thumb=0,
+        pointer=0,
+        mid=0,
+        ring=0,
+        pinky=0
+    )
+
+def decide_action(detections, im_shape, voice_command=None):
+
+    if voice_command:
+        if "reset" in voice_command or "open" in voice_command:
+            return reset_hand()
+        
     obj = select_primary(detections)
 
     if obj is None:
