@@ -1,6 +1,9 @@
 # Ultralytics 🚀 AGPL-3.0 License - https://ultralytics.com/license
 
+import sys
+sys.path.append("..")  # or full path
 
+from decision_layer import decide_action
 """
 Run YOLOv5 detection inference on images, videos, directories, globs, YouTube, webcam, streams, etc.
 
@@ -328,6 +331,9 @@ def run(
                     area = (x2 - x1) * (y2 - y1 ) 
                     # add detection info to get usable data, used in decision-layer.py
                     detections.append({"label": label, "confidence": float(conf), "area": area, "bbox": [x1, y1, x2, y2]})
+
+                if detections:
+                    action = decide_action(detections, im0.shape)
 
                 # action = decide_action(detections, im0.shape)
                 # if action: 
