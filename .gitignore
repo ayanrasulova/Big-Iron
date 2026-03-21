@@ -1,22 +1,26 @@
-# Python
-__pycache__/
-*.pyc
-*.pyo
-
-# Virtual environments
+yolov5-env2/
+yolov5-env/
 venv/
 .env/
-
-# YOLOv5 outputs
+.mypycache__/
+__pycache__/
+.ipynb_checkpoints/
+*.pyc
+*.pyo
+*.pyd
+*.so
+*.dylib
+*.egg-info/
+dist/
+build/
+.mypy_cache/3.14/numpy/
+.mypy_cache/
+.mypy_cache/3.14/
+yolov5/runs/
+.mypy_cache/3.14/importlib/
 runs/
-
-# Media outputs
 *.mp4
 *.avi
 *.mov
-
-# Model weights
 *.pt
-
-# OS files
 .DS_Store
