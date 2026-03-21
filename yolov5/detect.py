@@ -75,7 +75,7 @@ def run(
     source=ROOT / "data/images",  # file/dir/URL/glob/screen/0(webcam)
     data=ROOT / "data/coco128.yaml",  # dataset.yaml path
     imgsz=(640, 640),  # inference size (height, width)
-    conf_thres=0.25,  # confidence threshold
+    conf_thres=0.05,  # confidence threshold
     iou_thres=0.45,  # NMS IOU threshold
     max_det=1000,  # maximum detections per image
     device="",  # cuda device, i.e. 0 or 0,1,2,3 or cpu
@@ -233,6 +233,9 @@ def run(
             seen += 1
             if webcam:  # batch_size >= 1
                 p, im0, frame = path[i], im0s[i].copy(), dataset.count
+
+                # im0 = cv2.flip(im0, 1) # mirror webcam..
+
                 s += f"{i}: "
             else:
                 p, im0, frame = path, im0s.copy(), getattr(dataset, "frame", 0)
@@ -247,6 +250,42 @@ def run(
             if len(det):
                 # Rescale boxes from img_size to im0 size
                 det[:, :4] = scale_boxes(im.shape[2:], det[:, :4], im0.shape).round()
+
+                # --- CENTER FILTER ---
+                frame_h, frame_w = im0.shape[:2]
+                frame_cx = frame_w / 2
+                frame_cy = frame_h / 2
+
+                best_area = 0
+                best_det = None
+
+                for *xyxy, conf, cls in det:
+
+                    if conf < 0.10:
+                        continue
+
+                    x1, y1, x2, y2 = xyxy
+                    area = (x2 - x1) * (y2 - y1)
+
+                    if area > best_area:
+                        best_area = area
+                        best_det = (*xyxy, conf, cls)
+                
+                if best_det:
+                    x1, y1, x2, y2, conf, cls = best_det
+
+                    obj_cx = (x1 + x2) / 2
+                    obj_cy = (y1 + y2) / 2
+
+                    CENTER_THRESHOLD = 0.22
+
+                    dx = abs(obj_cx - frame_cx) / frame_w
+                    dy = abs(obj_cy - frame_cy) / frame_h
+
+                    if dx < CENTER_THRESHOLD and dy < CENTER_THRESHOLD:
+                        det = torch.tensor([[x1, y1, x2, y2, conf, cls]]).to(det.device)
+                    else:
+                        det = torch.empty((0,6)).to(det.device)
 
                 # Print results
                 for c in det[:, 5].unique():
@@ -299,11 +338,29 @@ def run(
 
             # Stream results
             im0 = annotator.result()
-            if view_img:
+
+            # CENTER TARGET BOX
+            h, w = im0.shape[:2]
+            box_size = 180
+
+            cx = w // 2
+            cy = h // 2
+
+            cv2.rectangle(
+                im0,
+                (cx - box_size, cy - box_size),
+                (cx + box_size, cy + box_size),
+                (0, 255, 0),
+                2
+            )
+            # ---------------------------
+
+            if view_img:                
                 if platform.system() == "Linux" and p not in windows:
                     windows.append(p)
                     cv2.namedWindow(str(p), cv2.WINDOW_NORMAL | cv2.WINDOW_KEEPRATIO)  # allow window resize (Linux)
                     cv2.resizeWindow(str(p), im0.shape[1], im0.shape[0])
+                    h, w = im0.shape[:2]
                 cv2.imshow(str(p), im0)
                 cv2.waitKey(1)  # 1 millisecond
 
