@@ -341,13 +341,20 @@ def run(
                     area = (x2 - x1) * (y2 - y1 ) 
                     # add detection info to get usable data, used in decision-layer.py
                     detections.append({"label": label, "confidence": float(conf), "area": area, "bbox": [x1, y1, x2, y2]})
-
+                
                 if detections:
                     cmd = voice_control.get_latest_command()
-                    action = decide_action(detections, im0.shape, voice_control.latest_command)
+
+                    action = decide_action(detections, im0.shape, cmd)
 
                     if action:
-                        voice_control.latest_command = None
+                        print("Action:", action)
+                        
+                # if detections:
+                #     cmd = voice_control.get_latest_command()
+                #     action = decide_action(detections, im0.shape, voice_control.get_latest_command())     
+                #     if action:
+                #         voice_control.get_latest_command = None
                 
 
 

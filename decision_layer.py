@@ -4,7 +4,7 @@ import serial
 
 import time # to avoid overloading arduino
 sys.path.append("..")  # or full path
-from voice_control import voice_loop, latest_command
+from voice_control import voice_loop, get_latest_command
 
 # get detections from detect.py and use them to decide what action to take
 # if detect "can", want to open all 5 fingers, then close them when closer to can 
