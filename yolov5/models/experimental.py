@@ -5,6 +5,8 @@ import math
 
 import numpy as np
 import torch
+import pathlib
+pathlib.PosixPath = pathlib.WindowsPath
 import torch.nn as nn
 from ultralytics.utils.patches import torch_load
 
