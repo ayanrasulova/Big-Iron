@@ -4,7 +4,10 @@ import sys
 sys.path.append("..")  # or full path
 
 from decision_layer import decide_action
-from voice_control import listen_for_command
+
+import threading
+import voice_control
+from voice_control import voice_loop
 
 """
 Run YOLOv5 detection inference on images, videos, directories, globs, YouTube, webcam, streams, etc.
@@ -187,6 +190,11 @@ def run(
 
     # Run inference
     model.warmup(imgsz=(1 if pt or model.triton else bs, 3, *imgsz))  # warmup
+
+    # voice
+    voice_thread = threading.Thread(target=voice_loop, daemon=True)
+    voice_thread.start()
+
     seen, windows, dt = 0, [], (Profile(device=device), Profile(device=device), Profile(device=device))
     for path, im, im0s, vid_cap, s in dataset:
         with dt[0]:
@@ -334,14 +342,12 @@ def run(
                     # add detection info to get usable data, used in decision-layer.py
                     detections.append({"label": label, "confidence": float(conf), "area": area, "bbox": [x1, y1, x2, y2]})
 
-                    voice_command = None
-
-                    # only listen occasionally (not every frame)
-                    if frame % 30 == 0:   # every ~1 second
-                        voice_command = listen_for_command()
-
                 if detections:
-                    action = decide_action(detections, im0.shape, voice_command)
+                    action = decide_action(detections, im0.shape, voice_control.latest_command)
+
+                    if action:
+                        voice_control.latest_command = None
+                
 
 
 
