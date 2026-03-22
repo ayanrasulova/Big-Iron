@@ -6,6 +6,8 @@ The Quickest Prosthetic in the Wild West! (Computer Vision Prosthetic Limb)
 
 Official "HooHacks 2026" Submission for: Ayan Rasulova (GitHub: ayanrasulova), Emilie Deadman (GitHub: echiino), Amelia Chen  (GitHub: ameimeilia), Jack Ellis (GitHub: jackawackadoo)
 
+Video Demo [Here](https://www.youtube.com/watch?v=ZUayejgblIs): 
+
 ## Our Inspiration:
 
 A lot of our previous projects have involved tools for accessiblity. We noticed that a lot of modern prosthetic limbs typically average in the ~thousands, depending on complexity. We wanted to see if, with a very low budget, we would be able to create a much cheaper alternative (<$40) using computer vision. 
