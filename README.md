@@ -1,8 +1,7 @@
 # Welcome to Big Iron! 🤠
 The Quickest Prosthetic in the Wild West! (Computer Vision Prosthetic Limb)
 <p align="center">
-<img width = "400" src="image.jpg"> 
-  <!-- <img  width = "400" src="./src/assets/drawingdemo.png"> -->
+<img width = "400" src="image.jpg"> <img  width = "400" src="image2.png"> 
 </p>
 
 Official "HooHacks 2026" Submission for: Ayan Rasulova (GitHub: ayanrasulova), Emilie Deadman (GitHub: echiino), Amelia Chen  (GitHub: ameimeilia), Jack Ellis (GitHub: jackawackadoo)
