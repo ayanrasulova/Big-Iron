@@ -5,7 +5,7 @@ The Quickest Prosthetic in the Wild West! (Computer Vision Prosthetic Limb)
   <!-- <img  width = "400" src="./src/assets/drawingdemo.png"> -->
 </p>
 
-Official "HooHacks 2026" Submission for: Ayan Rasulova (GitHub: ayanrasulova), Emilie Deadman (GitHub: echiino), Amelia Chen, Jack Ellis (GitHub: jackawackadoo)
+Official "HooHacks 2026" Submission for: Ayan Rasulova (GitHub: ayanrasulova), Emilie Deadman (GitHub: echiino), Amelia Chen  (GitHub: ameimeilia), Jack Ellis (GitHub: jackawackadoo)
 
 ## Our Inspiration:
 
