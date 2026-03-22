@@ -33,6 +33,9 @@ python install.sh
 
 Then, cd to the yolov5 directory, and run the following command to start the webcam:
 ```
-python detect.py --weights yolov5x.pt --source 0
+python detect.py \
+  --weights prosthetic_arm_weights.pt \
+  --source 0 \
+  --conf 0.5
 # if the webcam is not opening up, change it to --source 1 (or whatever the source of the webcam you are using is)
 ```
