@@ -1,5 +1,7 @@
 # Welcome to Big Iron! 🤠
-The Quickest prosthetic in the Wild West! Official "HooHacks 2026" Submission for: Ayan Rasulova (GitHub: ayanrasulova), Emilie Deadman (GitHub: echiino), Amelia Chen, Jack Ellis (GitHub: jackawackadoo)
+The Quickest Prosthetic in the Wild West! (Computer Vision Prosthetic Limb)
+
+Official "HooHacks 2026" Submission for: Ayan Rasulova (GitHub: ayanrasulova), Emilie Deadman (GitHub: echiino), Amelia Chen, Jack Ellis (GitHub: jackawackadoo)
 
 ## Our Inspiration:
 
