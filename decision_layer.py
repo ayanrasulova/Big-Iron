@@ -64,8 +64,8 @@ def decide_action(detections, im_shape, voice_command=None):
 
     label = obj["label"]
 
-    if label == "cup" or label == "bottle":
-        print("detected cup, opening hand")
+    if label == "cup" or label == "bottle" or label == "can":
+        print("detected can, opening hand")
         # if detected, wrist = 1, thumb = 180, pointer = 1, mid = 180, ring = 180, pinky = 180
         finger_output = build_output(1, 180, 1, 180, 180, 180)
         arduino_input = bytes(finger_output)
@@ -73,7 +73,7 @@ def decide_action(detections, im_shape, voice_command=None):
 
         return(arduino_input)
 
-    elif label == "toothbrush": # change to pen/pencil later
+    elif label == "toothbrush" or label == "pencil": # change to pen/pencil later
             print("detected pencil, opening hand")
             # if detected, wrist = 1, thumb = 180, pointer = 1, mid = 180, ring = 180, pinky = 180
             finger_output = build_output(1, 180, 1, 180, 180, 180)
