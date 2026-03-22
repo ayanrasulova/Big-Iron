@@ -92,7 +92,8 @@ def decide_action(detections, im_shape, voice_command=None):
     elif label == "cowboy_hat":
         print("detected hat, engaging finger guns")
         # if detected, finger guns 
-        finger_output = build_output(180, 1, 1, 1, 180, 180)
+        finger_output = build_output(1, 1, 1, 1, 180, 180)
+        print("=================================")
         arduino_input = bytes(finger_output)
         arduino_loop(arduino_input)
 
