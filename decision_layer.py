@@ -13,6 +13,11 @@ from voice_control import voice_loop, get_latest_command
 # initialize serial port
 ser = serial.Serial('COM5', 115200, timeout=1)
 
+# give Arduino time to reset (VERY IMPORTANT)
+time.sleep(2)
+
+# send default/reset position immediately
+
 def build_output(wrist, thumb, pointer, mid, ring, pinky):
     data_bytes = [wrist, thumb, pointer, mid, ring, pinky]
 
@@ -21,6 +26,8 @@ def build_output(wrist, thumb, pointer, mid, ring, pinky):
         check ^= b
 
     return [190] + [0xEF] + data_bytes + [check]
+
+ser.write(bytes(build_output(180, 1, 180, 1, 1, 1)))
 
 # select largest object
 def select_primary(detections, min_area=5000):
