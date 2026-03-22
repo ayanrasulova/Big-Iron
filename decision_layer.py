@@ -1,5 +1,4 @@
 import cv2
-
 import sys
 sys.path.append("..")  # or full path
 
@@ -71,13 +70,6 @@ def decide_action(detections, im_shape, voice_command=None):
         print(finger_output)
         return(arduino_input)
 
-
-        # ignore this for now 
-        # if obj["area"] < 10000:
-        #      return "approach"
-        # else:
-        #      return "grasp_can"
-
     elif label == "toothbrush": # change to pen/pencil later
             print("detected pencil, opening hand")
             # if detected, wrist = 1, thumb = 180, pointer = 1, mid = 180, ring = 180, pinky = 180
@@ -87,17 +79,3 @@ def decide_action(detections, im_shape, voice_command=None):
             return(arduino_input)
     return None
     
-# motions 
-
-# grasp 
-# def grasp_can():
-#     # open fingers
-#     open_hand()
-#     # wait for can to be close enough (area threshold)
-#     while True:
-#         detections = get_detections()  # function to get current detections
-#         obj = select_primary(detections)
-#         if obj and (obj["label"] == "bottle" or obj["label"] == "cup") and obj["area"] > 10000:  # example threshold
-#             break
-#     # close fingers
-#     close_hand()
