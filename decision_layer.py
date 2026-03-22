@@ -11,7 +11,7 @@ from voice_control import voice_loop, latest_command
 # start byte, wrist, thumb, pointer, mid, ring, pinky, checksum
 
 # initialize serial port
-ser = serial.Serial('/dev/ttyUSB0', 115200, timeout=1)
+ser = serial.Serial('/dev/cu.usbserial-110', 115200, timeout=1)
 
 def build_output(wrist, thumb, pointer, mid, ring, pinky):
     data_bytes = [wrist, thumb, pointer, mid, ring, pinky]
