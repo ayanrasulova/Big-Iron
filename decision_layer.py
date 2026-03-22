@@ -39,7 +39,7 @@ def select_primary(detections, min_area=5000):
 def reset_hand():
     print("VOICE: resetting hand")
 
-    return build_output( # all should be 1 except wrist and pointer (which are reversed)
+    reset = build_output( # all should be 1 except wrist and pointer (which are reversed)
         wrist=180,
         thumb=1,
         pointer=180,
@@ -47,12 +47,14 @@ def reset_hand():
         ring=1,
         pinky=1
     )
+    arduino_input = bytes(reset)
+    return arduino_input
 
 def decide_action(detections, im_shape, voice_command=None):
 
     if voice_command: # resets the hand position
         if "reset" in voice_command or "open" in voice_command or "reject" in voice_command:
-            return reset_hand()
+            reset_hand()
         
     obj = select_primary(detections)
 
@@ -65,7 +67,9 @@ def decide_action(detections, im_shape, voice_command=None):
         print("detected cup, opening hand")
         # if detected, wrist = 1, thumb = 180, pointer = 1, mid = 180, ring = 180, pinky = 180
         finger_output = build_output(1, 180, 1, 180, 180, 180)
+        arduino_input = bytes(finger_output)
         print(finger_output)
+        return(arduino_input)
 
 
         # ignore this for now 
@@ -78,7 +82,9 @@ def decide_action(detections, im_shape, voice_command=None):
             print("detected pencil, opening hand")
             # if detected, wrist = 1, thumb = 180, pointer = 1, mid = 180, ring = 180, pinky = 180
             finger_output = build_output(1, 180, 1, 180, 180, 180)
+            arduino_input = bytes(finger_output)
             print(finger_output)
+            return(arduino_input)
     return None
     
 # motions 
