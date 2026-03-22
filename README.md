@@ -1,7 +1,7 @@
 # Welcome to Big Iron! 🤠
 The Quickest Prosthetic in the Wild West! (Computer Vision Prosthetic Limb)
 <p align="center">
-<img width = "700" src="image.jpg"> 
+<img width = "400" src="image.jpg"> 
   <!-- <img  width = "400" src="./src/assets/drawingdemo.png"> -->
 </p>
 
