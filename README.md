@@ -10,11 +10,10 @@ Video Demo [Here](https://www.youtube.com/watch?v=ZUayejgblIs):
 
 ## Our Inspiration:
 
-A lot of our previous projects have involved tools for accessiblity as we are all very passionate about making technology accessible without cost barriers. We noticed that a lot of modern prosthetic limbs typically average in the ~thousands, depending on complexity. We wanted to see if, with a very low budget, we would be able to create a much cheaper alternative (<$40) using computer vision. Our intended vision for Big Iron is that even a kid with very little experience with prosthetics could print out these parts on their own. 
-
+A lot of our previous projects have involved tools for accessiblity. We noticed that a lot of modern prosthetic limbs typically average in the ~thousands, depending on complexity. We wanted to see if, with a very low budget, we would be able to create a much cheaper alternative (<$40) using computer vision. In doing so, we can help empower those who might need such a device but lack the funds to acquire one, for example, a child born without a hand who will be constantly need to upgrade the size of their prosthetic.
 ## Features:
 
-Big Iron utilizes YOLOv5, fine tuning our image classification model with real-world data. The user wears the webcam, which detects objects within a certain distance. The computer vision application composes and transmits a package to an Arduino Nano, which drives the prosthetic arm using a hardware API we developed. 
+When our computer vision model detects an item from its object library, it composes a packet of data and sends it to an arduino nano over UART. This packet contains all the necessary data to move and contract the fingers on Big Iron. The arduino then interacts with 6 servo motors to move the hand accordingly. The computer vision model takes advantage of its understanding on how a human hand would interact with certain objects to produce a natural and effective motions in the prosthetic.
 
 ## Challenges and What We Learned: 
 
