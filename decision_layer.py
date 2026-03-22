@@ -20,7 +20,7 @@ def build_output(wrist, thumb, pointer, mid, ring, pinky):
     for b in data_bytes:
         check ^= b
 
-    return [190] + data_bytes + [check]
+    return [190] + [0xEF] + data_bytes + [check]
 
 # select largest object
 def select_primary(detections, min_area=5000):
