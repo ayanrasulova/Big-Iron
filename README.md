@@ -16,7 +16,7 @@ First, you must install all the correct dependencies in a virtual environment us
 
 ```
 # create venv (if mac do python3)
-python -m venv yolov5-env
+python3.11 -m venv yolov5-env
 
 # activate (on mac do source yolov5-env/bin/activate)
 yolov5-env\Scripts\activate
