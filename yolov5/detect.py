@@ -343,6 +343,7 @@ def run(
                     detections.append({"label": label, "confidence": float(conf), "area": area, "bbox": [x1, y1, x2, y2]})
 
                 if detections:
+                    cmd = voice_control.get_latest_command()
                     action = decide_action(detections, im0.shape, voice_control.latest_command)
 
                     if action:
