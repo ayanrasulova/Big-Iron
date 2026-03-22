@@ -55,7 +55,7 @@ def decide_action(detections, im_shape, voice_command=None):
     if voice_command: # resets the hand position
         if "reset" in voice_command or "open" in voice_command or "reject" in voice_command:
             arduino_loop(reset_hand())
-            return
+            return(arduino_input)
         
     obj = select_primary(detections)
 
