@@ -27,7 +27,7 @@ def build_output(wrist, thumb, pointer, mid, ring, pinky):
 
     return [190] + [0xEF] + data_bytes + [check]
 
-ser.write(bytes(build_output(180, 1, 180, 1, 1, 1)))
+ser.write(bytes(build_output(180, 1, 1, 1, 1, 1)))
 
 # select largest object
 def select_primary(detections, min_area=5000):
@@ -49,7 +49,7 @@ def reset_hand():
     reset = build_output( # all should be 1 except wrist and pointer (which are reversed)
         wrist=180,
         thumb=1,
-        pointer=180,
+        pointer=1,
         mid=1,
         ring=1,
         pinky=1
@@ -74,7 +74,7 @@ def decide_action(detections, im_shape, voice_command=None):
     if label == "cup" or label == "bottle" or label == "can":
         print("detected can, opening hand")
         # if detected, wrist = 1, thumb = 180, pointer = 1, mid = 180, ring = 180, pinky = 180
-        finger_output = build_output(1, 180, 1, 180, 180, 180)
+        finger_output = build_output(1, 180, 180, 180, 180, 180)
         arduino_input = bytes(finger_output)
         arduino_loop(arduino_input)
 
@@ -83,7 +83,7 @@ def decide_action(detections, im_shape, voice_command=None):
     elif label == "toothbrush" or label == "pencil": # change to pen/pencil later
             print("detected pencil, opening hand")
             # if detected, wrist = 1, thumb = 180, pointer = 1, mid = 180, ring = 180, pinky = 180
-            finger_output = build_output(1, 180, 1, 180, 180, 180)
+            finger_output = build_output(1, 180, 180, 180, 180, 180)
             arduino_input = bytes(finger_output)
             arduino_loop(arduino_input)
 
